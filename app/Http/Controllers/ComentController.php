@@ -14,7 +14,8 @@ class ComentController extends Controller
      */
     public function index()
     {
-        //
+        $MComentarios = Coment::all();
+        return response()->json($MComentarios);
     }
 
     /**
@@ -35,7 +36,12 @@ class ComentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $C_comentario = new Coment;
+        $C_comentario->comentario = $request->comentario;
+        $C_comentario->post_id = $request->postid;
+        $C_comentario->save();
+
+        return 'Comentario creado correctamente';
     }
 
     /**
@@ -44,9 +50,10 @@ class ComentController extends Controller
      * @param  \App\Coment  $coment
      * @return \Illuminate\Http\Response
      */
-    public function show(Coment $coment)
+    public function show($id)
     {
-        //
+        $mostrar = Coment::find($id);
+        return response()->json($mostrar);
     }
 
     /**
@@ -67,9 +74,13 @@ class ComentController extends Controller
      * @param  \App\Coment  $coment
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Coment $coment)
+    public function update(Request $request, $id)
     {
-        //
+        $editar = Coment::find($id); //Aquí busco el id de la tabla
+        $editar->comentario = $request->comentario;//Después aquí en la variable editar en el campo post es igual a todos los campos del formulario y postsito lo va a poner en el campo post
+        $editar->save(); //Guardo
+        return 'El post fue modificado correctamente';
+        
     }
 
     /**
@@ -78,8 +89,10 @@ class ComentController extends Controller
      * @param  \App\Coment  $coment
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Coment $coment)
+    public function destroy($id)
     {
-        //
+        $eliminar = Coment::find($id);
+        $eliminar->delete();
+        return 'El comentario se ha eliminado correctamente';
     }
 }

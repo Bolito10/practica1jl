@@ -11,6 +11,9 @@ class Comentario extends Seeder
      */
     public function run()
     {
-        //
+        DB::table('coments')->insert([
+            'comentario'=>'Hola prueba seeder2',
+            'post_id'=>'3'
+        ]);
     }
 }
